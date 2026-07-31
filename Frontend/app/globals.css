@@ -1,26 +1,211 @@
 @import "tailwindcss";
 
+/* ─────────────────────────────────────────────
+   AEGIS DESIGN SYSTEM — CSS CUSTOM PROPERTIES
+───────────────────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --aegis-black:      #08090C;
+  --aegis-panel:      #0B0C10;
+  --aegis-card:       #12141C;
+  --aegis-border:     rgba(148, 163, 184, 0.08);
+  --aegis-cyan:       #00E5FF;
+  --aegis-crimson:    #FF2A6D;
+  --aegis-amber:      #FFB800;
+  --aegis-emerald:    #00F5A0;
+  --font-sans:        var(--font-inter);
+  --font-mono:        var(--font-jetbrains-mono);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* @theme inline {
+  --color-background:    var(--aegis-black);
+  --color-foreground:    #e2e8f0;
+  --font-sans:           var(--font-inter);
+  --font-mono:           var(--font-jetbrains-mono);
+} */
+
+/* ─────────────────────────────────────────────
+   BASE RESET & BODY
+───────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  color-scheme: dark;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--aegis-black);
+  color: #e2e8f0;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
+}
+
+/* ─────────────────────────────────────────────
+   CUSTOM SCROLLBARS (thin, cyan tint)
+───────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 229, 255, 0.2);
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 229, 255, 0.4);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 229, 255, 0.2) transparent;
+}
+
+/* ─────────────────────────────────────────────
+   KEYFRAME ANIMATIONS
+───────────────────────────────────────────── */
+
+/* Subtle scan-line sweep */
+@keyframes scanline {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+/* Radar-style pulsing ring for map epicentre */
+@keyframes radar-ping {
+  0%   { transform: scale(0.8); opacity: 0.8; }
+  70%  { transform: scale(2.2); opacity: 0; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+/* Glowing text flicker for LIVE indicators */
+@keyframes glow-pulse {
+  0%, 100% { text-shadow: 0 0 6px rgba(0, 229, 255, 0.5); opacity: 1; }
+  50%       { text-shadow: 0 0 16px rgba(0, 229, 255, 0.9); opacity: 0.85; }
+}
+
+/* Horizontal scroll for ticker */
+@keyframes ticker-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Stagger fade-in for list items */
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Arc gauge fill animation */
+@keyframes gauge-fill {
+  from { stroke-dashoffset: 220; }
+  to   { stroke-dashoffset: var(--gauge-offset); }
+}
+
+/* Data flow dash animation */
+@keyframes flow-dash {
+  to { stroke-dashoffset: -20; }
+}
+
+/* Hero grid shimmer */
+@keyframes grid-shimmer {
+  0%, 100% { opacity: 0.04; }
+  50%       { opacity: 0.08; }
+}
+
+/* Blink cursor */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* ─────────────────────────────────────────────
+   UTILITY CLASSES (used across components)
+───────────────────────────────────────────── */
+
+/* Scanline overlay */
+.aegis-scanline::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 50%,
+    rgba(0, 229, 255, 0.015) 50%
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Animated dot-grid background */
+.aegis-dot-grid {
+  background-image:
+    radial-gradient(circle, rgba(0, 229, 255, 0.12) 1px, transparent 1px);
+  background-size: 28px 28px;
+  animation: grid-shimmer 4s ease-in-out infinite;
+}
+
+/* Neon glow border on hover */
+.aegis-glow-hover {
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.aegis-glow-hover:hover {
+  box-shadow: 0 0 18px rgba(0, 229, 255, 0.12), inset 0 0 18px rgba(0, 229, 255, 0.04);
+  border-color: rgba(0, 229, 255, 0.3) !important;
+}
+
+/* Crimson glow for CRITICAL items */
+.aegis-crimson-glow {
+  box-shadow: 0 0 12px rgba(255, 42, 109, 0.25);
+}
+
+/* Amber glow for HIGH items */
+.aegis-amber-glow {
+  box-shadow: 0 0 12px rgba(255, 184, 0, 0.2);
+}
+
+/* Fade-in-up animation utility */
+.animate-fade-in-up {
+  animation: fade-in-up 0.35s ease both;
+}
+
+/* Ticker animation */
+.ticker-track {
+  animation: ticker-scroll 40s linear infinite;
+}
+
+/* Radar pulse ring */
+.radar-ring {
+  animation: radar-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* Gauge stroke animation */
+.gauge-arc {
+  animation: gauge-fill 1s ease-out forwards;
+}
+
+/* Cursor blink */
+.cursor-blink::after {
+  content: '|';
+  animation: blink 1s step-end infinite;
+}
+
+/* Glass panel */
+.glass-panel {
+  background: rgba(11, 12, 16, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Selection colour */
+::selection {
+  background: rgba(0, 229, 255, 0.25);
+  color: #ffffff;
 }

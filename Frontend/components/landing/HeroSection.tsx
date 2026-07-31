@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Shield, Terminal, Activity, Layers, Satellite } from 'lucide-react';
+import { Shield, Activity } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 
 function useCounter(target: number, duration = 2000) {
@@ -25,13 +25,6 @@ const STATS = [
   { label: 'Events Monitored', value: 2847, suffix: '+' },
   { label: 'Assets Indexed', value: 14200, suffix: '+' },
   { label: 'Threat Analyses', value: 1093, suffix: '' },
-];
-
-const PIPELINE = [
-  { icon: Satellite, label: 'NASA EONET', colour: 'text-cyan-400', border: 'border-cyan-500/30', bg: 'bg-cyan-500/10' },
-  { icon: Layers, label: 'GeoPandas', colour: 'text-amber-400', border: 'border-amber-500/30', bg: 'bg-amber-500/10' },
-  { icon: Terminal, label: 'Ollama LLM', colour: 'text-rose-400', border: 'border-rose-500/30', bg: 'bg-rose-500/10' },
-  { icon: Shield, label: 'Aegis Matrix', colour: 'text-emerald-400', border: 'border-emerald-500/30', bg: 'bg-emerald-500/10' },
 ];
 
 export default function HeroSection() {
@@ -90,16 +83,9 @@ export default function HeroSection() {
           <Shield className="w-4 h-4" />
           OPEN MATRIX DASHBOARD
         </Link>
-        <a
-          href="#architecture"
-          className="flex items-center justify-center gap-2 bg-[#0B0C10] border border-slate-700 hover:border-slate-500 text-slate-300 hover:text-slate-100 font-mono px-6 py-3.5 rounded text-xs transition-all hover:-translate-y-0.5"
-        >
-          <Terminal className="w-4 h-4 text-slate-500" />
-          VIEW SYSTEM ARCHITECTURE
-        </a>
       </div>
 
-      <div className="relative mt-12 sm:mt-14 w-full max-w-2xl grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-4">
+      <div className="relative mt-10 sm:mt-6 w-full max-w-2xl grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-4">
         {STATS.map((stat, i) => (
           <div key={stat.label} className="text-center">
             <div className="font-mono text-2xl font-bold text-slate-100">
@@ -110,61 +96,6 @@ export default function HeroSection() {
             </div>
           </div>
         ))}
-      </div>
-
-      <div id="architecture-flow" className="relative mt-12 sm:mt-16 w-full max-w-3xl">
-        <div className="text-center mb-8">
-          <span className="font-mono text-[10px] text-slate-500 uppercase tracking-widest">
-            Processing Pipeline
-          </span>
-        </div>
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4 md:gap-2">
-          {PIPELINE.map((node, idx) => {
-            const Icon = node.icon;
-            return (
-              <div key={node.label} className="flex flex-col md:flex-row items-center flex-1 w-full md:w-auto gap-4 md:gap-0">
-                <div className={`w-full md:w-auto flex-1 flex flex-col items-center p-4 rounded-lg border ${node.border} ${node.bg} text-center group hover:-translate-y-1 transition-transform duration-200`}>
-                  <Icon className={`w-5 h-5 ${node.colour} mb-2`} />
-                  <span className={`font-mono text-[10px] font-bold ${node.colour} tracking-wider`}>
-                    {node.label}
-                  </span>
-                </div>
-                {idx < PIPELINE.length - 1 && (
-                  <>
-                    <div className="hidden md:flex w-8 shrink-0 items-center justify-center">
-                      <svg width="32" height="12" viewBox="0 0 32 12" fill="none" aria-hidden>
-                        <path
-                          d="M0 6 H28 M22 1 L29 6 L22 11"
-                          stroke="rgba(148,163,184,0.3)"
-                          strokeWidth="1.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeDasharray="4 2"
-                        >
-                          <animate attributeName="stroke-dashoffset" from="0" to="-12" dur="1.2s" repeatCount="indefinite" />
-                        </path>
-                      </svg>
-                    </div>
-                    <div className="flex md:hidden h-8 shrink-0 items-center justify-center">
-                      <svg width="12" height="32" viewBox="0 0 12 32" fill="none" aria-hidden>
-                        <path
-                          d="M6 0 V28 M1 22 L6 29 L11 22"
-                          stroke="rgba(148,163,184,0.3)"
-                          strokeWidth="1.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeDasharray="4 2"
-                        >
-                          <animate attributeName="stroke-dashoffset" from="0" to="-12" dur="1.2s" repeatCount="indefinite" />
-                        </path>
-                      </svg>
-                    </div>
-                  </>
-                )}
-              </div>
-            );
-          })}
-        </div>
       </div>
     </section>
   );
