@@ -1,32 +1,30 @@
 @import "tailwindcss";
 
-/* ─────────────────────────────────────────────
-   AEGIS DESIGN SYSTEM — CSS CUSTOM PROPERTIES
-───────────────────────────────────────────── */
+/* AEGIS DESIGN SYSTEM — CSS CUSTOM PROPERTIES */
 :root {
-  --aegis-black:      #08090C;
-  --aegis-panel:      #0B0C10;
-  --aegis-card:       #12141C;
-  --aegis-border:     rgba(148, 163, 184, 0.08);
-  --aegis-cyan:       #00E5FF;
-  --aegis-crimson:    #FF2A6D;
-  --aegis-amber:      #FFB800;
-  --aegis-emerald:    #00F5A0;
-  --font-sans:        var(--font-inter);
-  --font-mono:        var(--font-jetbrains-mono);
+  --aegis-black: #08090c;
+  --aegis-panel: #0b0c10;
+  --aegis-card: #12141c;
+  --aegis-border: rgba(148, 163, 184, 0.08);
+  --aegis-cyan: #00e5ff;
+  --aegis-crimson: #ff2a6d;
+  --aegis-amber: #ffb800;
+  --aegis-emerald: #00f5a0;
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains-mono);
 }
 
-/* @theme inline {
-  --color-background:    var(--aegis-black);
-  --color-foreground:    #e2e8f0;
-  --font-sans:           var(--font-inter);
-  --font-mono:           var(--font-jetbrains-mono);
-} */
+@theme inline {
+  --color-background: var(--aegis-black);
+  --color-foreground: #e2e8f0;
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains-mono);
+}
 
-/* ─────────────────────────────────────────────
-   BASE RESET & BODY
-───────────────────────────────────────────── */
-*, *::before, *::after {
+/* BASE RESET & BODY */
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -43,9 +41,7 @@ body {
   overflow: hidden;
 }
 
-/* ─────────────────────────────────────────────
-   CUSTOM SCROLLBARS (thin, cyan tint)
-───────────────────────────────────────────── */
+/* CUSTOM SCROLLBARS (thin, cyan tint) */
 ::-webkit-scrollbar {
   width: 4px;
   height: 4px;
@@ -67,71 +63,112 @@ body {
   scrollbar-color: rgba(0, 229, 255, 0.2) transparent;
 }
 
-/* ─────────────────────────────────────────────
-   KEYFRAME ANIMATIONS
-───────────────────────────────────────────── */
+/* KEYFRAME ANIMATIONS */
 
 /* Subtle scan-line sweep */
 @keyframes scanline {
-  0%   { transform: translateY(-100%); }
-  100% { transform: translateY(100vh); }
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100vh);
+  }
 }
 
 /* Radar-style pulsing ring for map epicentre */
 @keyframes radar-ping {
-  0%   { transform: scale(0.8); opacity: 0.8; }
-  70%  { transform: scale(2.2); opacity: 0; }
-  100% { transform: scale(2.2); opacity: 0; }
+  0% {
+    transform: scale(0.8);
+    opacity: 0.8;
+  }
+  70% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
 }
 
 /* Glowing text flicker for LIVE indicators */
 @keyframes glow-pulse {
-  0%, 100% { text-shadow: 0 0 6px rgba(0, 229, 255, 0.5); opacity: 1; }
-  50%       { text-shadow: 0 0 16px rgba(0, 229, 255, 0.9); opacity: 0.85; }
+  0%,
+  100% {
+    text-shadow: 0 0 6px rgba(0, 229, 255, 0.5);
+    opacity: 1;
+  }
+  50% {
+    text-shadow: 0 0 16px rgba(0, 229, 255, 0.9);
+    opacity: 0.85;
+  }
 }
 
 /* Horizontal scroll for ticker */
 @keyframes ticker-scroll {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 /* Stagger fade-in for list items */
 @keyframes fade-in-up {
-  from { opacity: 0; transform: translateY(8px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Arc gauge fill animation */
 @keyframes gauge-fill {
-  from { stroke-dashoffset: 220; }
-  to   { stroke-dashoffset: var(--gauge-offset); }
+  from {
+    stroke-dashoffset: 220;
+  }
+  to {
+    stroke-dashoffset: var(--gauge-offset);
+  }
 }
 
 /* Data flow dash animation */
 @keyframes flow-dash {
-  to { stroke-dashoffset: -20; }
+  to {
+    stroke-dashoffset: -20;
+  }
 }
 
 /* Hero grid shimmer */
 @keyframes grid-shimmer {
-  0%, 100% { opacity: 0.04; }
-  50%       { opacity: 0.08; }
+  0%,
+  100% {
+    opacity: 0.04;
+  }
+  50% {
+    opacity: 0.08;
+  }
 }
 
 /* Blink cursor */
 @keyframes blink {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
 }
 
-/* ─────────────────────────────────────────────
-   UTILITY CLASSES (used across components)
-───────────────────────────────────────────── */
+/* UTILITY CLASSES (used across components)*/
 
-/* Scanline overlay */
 .aegis-scanline::after {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   background: linear-gradient(
@@ -146,18 +183,25 @@ body {
 
 /* Animated dot-grid background */
 .aegis-dot-grid {
-  background-image:
-    radial-gradient(circle, rgba(0, 229, 255, 0.12) 1px, transparent 1px);
+  background-image: radial-gradient(
+    circle,
+    rgba(0, 229, 255, 0.12) 1px,
+    transparent 1px
+  );
   background-size: 28px 28px;
   animation: grid-shimmer 4s ease-in-out infinite;
 }
 
 /* Neon glow border on hover */
 .aegis-glow-hover {
-  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+  transition:
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
 }
 .aegis-glow-hover:hover {
-  box-shadow: 0 0 18px rgba(0, 229, 255, 0.12), inset 0 0 18px rgba(0, 229, 255, 0.04);
+  box-shadow:
+    0 0 18px rgba(0, 229, 255, 0.12),
+    inset 0 0 18px rgba(0, 229, 255, 0.04);
   border-color: rgba(0, 229, 255, 0.3) !important;
 }
 
@@ -193,7 +237,7 @@ body {
 
 /* Cursor blink */
 .cursor-blink::after {
-  content: '|';
+  content: "|";
   animation: blink 1s step-end infinite;
 }
 
