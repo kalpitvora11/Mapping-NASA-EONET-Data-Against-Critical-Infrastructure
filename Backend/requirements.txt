@@ -1,0 +1,8 @@
+fastapi
+uvicorn[standard]
+diskcache
+python-dotenv
+geopandas
+httpx
+ollama
+torch

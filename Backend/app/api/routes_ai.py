@@ -34,13 +34,16 @@ async def get_ai_briefing(event_type: str, event_id: int, episode_id: int):
     hydro_data = await fetch_hydro_timeseries(centroid.y, centroid.x)
     daily_discharge = hydro_data.get("daily", {}).get("river_discharge", [])
     
-    forecast_metrics = {}
-    if daily_discharge:
+    forecast_metrics = {"p10": [], "p50": [], "p90": []}
+
+    if hydro_data.get("metric") == "river_discharge" and daily_discharge:
         clean_history = [x for x in daily_discharge if x is not None]
-        forecast_metrics = run_severity_forecast(clean_history)
+
+        if len(clean_history) >= 14:
+            forecast_metrics = run_severity_forecast(clean_history)
 
     event_name = f"{event_type} - ID: {event_id}"
-    briefing_markdown = generate_executive_briefing(event_name, risk_counts, forecast_metrics)
+    briefing_markdown = generate_executive_briefing(event_type, event_id, risk_counts, forecast_metrics)
 
     return {
         "event": event_name,
